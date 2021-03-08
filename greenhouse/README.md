@@ -1,16 +1,6 @@
 # Ariel's Greenhouse #
 
-## Sensor Circuit ##
-sensors.stanza
+General: Physical placement will be a whole rodeo.
+Schematic: Nearly done. A part replacement or two and a couple wireups.
 
-Terminals: where to place these?
-
-Probes: Are these actual components? I've made mine by extending the board on two legs and creating polygonal copper-pours.
-
-## Main Circuit ##
-greenhouse.stanza
-
-I haven't arranged physical placement.
-
-Goldfish: What pins should I be connecting to? Definitely need to connect my data pins from my sensor circuit. \
-Clock too.
+ATmega: Which pins can I use?

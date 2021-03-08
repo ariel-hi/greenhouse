@@ -19,14 +19,13 @@ pcb-module fet-circuit :
   pin gnd
   pin vcc
   inst terminal2 : c-282837-2
-  inst gnd-diode : ocdb/on-semiconductor/MBR0520L/component
   inst vcc-diode : ocdb/on-semiconductor/MBR0520L/component
   inst fet : IRF520
-  net GND (gnd, gnd-diode.a, fet.G)
+  net CTRL (fet.G)
+  net GND (gnd, fet.S)
   net +12V (vcc, vcc-diode.a)
   net (vcc-diode.c, terminal2.p[1])
   net (fet.D, terminal2.p[2])
-  net (fet.S, gnd-diode.c)
   schematic-group(self) = fet
   
 
@@ -35,6 +34,7 @@ pcb-module greenhouse :
   inst ps : ocdb/texas-instruments/TLV62130/module(5.0)
   inst fet : fet-circuit[2]
 
+  net (ps.buck.EN, ps.buck.PVIN)
   net GND (fet[0].gnd, fet[1].gnd, mcu.gnd, ps.gnd)
   net VCC (mcu.vcc, ps.vout)
   net +12V (fet[0].vcc, fet[1].vcc, ps.vin)

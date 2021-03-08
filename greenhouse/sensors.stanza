@@ -24,7 +24,8 @@ defn probe-shape (x:Double, y:Double) -> Polygon :
   transform(loc(x, y), poly)
 
 pcb-landpattern probe-lp :
-  pad p[1] : smd-pad(0.0, 0.0) at loc(0.0, 0.0)
+  pad p[1] : oval-smd-pad(0.0, 0.0) at loc(0.0, 0.0)
+  ref-label()
 
 pcb-symbol probe-sym :
   pin p at Point(0.0, 0.0)
@@ -34,6 +35,9 @@ pcb-component probe :
   pin p
   landpattern = probe-lp(p => probe-lp.p[1])
   symbol = probe-sym(p => probe-sym.p)
+  name = "Probe"
+  reference-prefix = "Q"
+  mpn = "Probe"
 
 pcb-module soil-circuit :
   pin vcc
@@ -45,6 +49,9 @@ pcb-module soil-circuit :
 
   val r1 = res-strap(gnd, sig, 10.0e3)
   val r2 = res-strap(prb[1].p, vcc, 100.0)
+
+  val c1 = cap-strap(gnd, vcc, 1.0e-7)
+  val c2 = cap-strap(gnd, vcc, 1.0e-8)
 
   public net GND (gnd)
   public net VCC (vcc, transistor.p[3])
