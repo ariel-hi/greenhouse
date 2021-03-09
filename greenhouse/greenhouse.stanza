@@ -13,37 +13,54 @@ defpackage greenhouse :
 
   ; import sensors
   import terminals
-  import IRF520
+  ; import IRF520
+  import SOT-523
+  import BLM18KG700TN1D
+  import usb-connector
 
 pcb-module fet-circuit :
   pin gnd
   pin vcc
+  pin ctrl
   inst terminal2 : c-282837-2
   inst vcc-diode : ocdb/on-semiconductor/MBR0520L/component
-  inst fet : IRF520
-  net CTRL (fet.G)
+  inst fet : SOT-523
   net GND (gnd, fet.S)
   net +12V (vcc, vcc-diode.a)
+  net (fet.G, ctrl)
   net (vcc-diode.c, terminal2.p[1])
   net (fet.D, terminal2.p[2])
-  schematic-group(self) = fet
   
 
 pcb-module greenhouse :
   inst mcu : ocdb/microchip/ATmega32U4/module
-  inst ps : ocdb/texas-instruments/TLV62130/module(5.0)
+  inst usb-con : usb-c-connector
+  inst ps : TLV62130/module(5.0)
   inst fet : fet-circuit[2]
 
   net (ps.buck.EN, ps.buck.PVIN)
-  net GND (fet[0].gnd, fet[1].gnd, mcu.gnd, ps.gnd)
-  net VCC (mcu.vcc, ps.vout)
+  net GND (fet[0].gnd, fet[1].gnd, mcu.gnd, ps.gnd, usb-con.GND)
+  net VCC (mcu.vcc, ps.vout, usb-con.VCC)
   net +12V (fet[0].vcc, fet[1].vcc, ps.vin)
+  net USB-P (usb-con.USB-P, mcu.U1.D+)
+  net USB-N (usb-con.USB-N, mcu.U1.D-)
 
-  symbol(GND) = ground-sym
-  symbol(VCC) = supply-sym
+
+
+  ; 22 Ohm Resistor to FET Circuits
+  val r1 = res-strap(mcu.U1.PB5, fet[0].ctrl, 22.0)
+  val r2 = res-strap(mcu.U1.PB6, fet[1].ctrl, 22.0)
 
   schematic-group(ps) = ps
   schematic-group(mcu) = mcu
+  schematic-group(r1) = mcu
+  schematic-group(r2) = mcu
+  schematic-group(usb-con) = usb
+  schematic-group(fet[0]) = water-valve-fet
+  schematic-group(fet[1]) = fan-fet
+
+  symbol(GND) = ground-sym
+  symbol(VCC) = supply-sym
 
 val main-design = make-default-board(greenhouse, 4, 30.0, 50.0)
 
