@@ -40,16 +40,16 @@ pcb-symbol c-2N3904-symbol :
     name-size = 0.609
 
   layer("foreground") = Rectangle(0.762, 5.08, loc(0.127, 0.0))
-  layer("foreground") = Line(0.5, [Point(2.54, 2.54), Point(0.508, 1.524)])
-  layer("foreground") = Line(0.5, [Point(1.778, -1.524), Point(2.54, -2.54)])
-  layer("foreground") = Line(0.5, [Point(2.54, -2.54), Point(1.27, -2.54)])
-  layer("foreground") = Line(0.5, [Point(1.27, -2.54), Point(1.778, -1.524)])
-  layer("foreground") = Line(0.5, [Point(1.549, -2.032), Point(0.304, -1.423)])
-  layer("foreground") = Line(1.0, [Point(1.524, -2.413), Point(2.286, -2.413)])
-  layer("foreground") = Line(1.0, [Point(2.286, -2.413), Point(1.778, -1.778)])
-  layer("foreground") = Line(1.0, [Point(1.778, -1.778), Point(1.524, -2.286)])
-  layer("foreground") = Line(1.0, [Point(1.524, -2.286), Point(1.905, -2.286)])
-  layer("foreground") = Line(1.0, [Point(1.905, -2.286), Point(1.778, -2.032)])
+  layer("foreground") = Line(1.0, [Point(2.54, 2.54), Point(0.508, 1.524)])
+  layer("foreground") = Line(1.0, [Point(1.778, -1.524), Point(2.54, -2.54)])
+  layer("foreground") = Line(1.0, [Point(2.54, -2.54), Point(1.27, -2.54)])
+  layer("foreground") = Line(1.0, [Point(1.27, -2.54), Point(1.778, -1.524)])
+  layer("foreground") = Line(1.0, [Point(1.549, -2.032), Point(0.304, -1.423)])
+  layer("foreground") = Line(1.5, [Point(1.524, -2.413), Point(2.286, -2.413)])
+  layer("foreground") = Line(1.5, [Point(2.286, -2.413), Point(1.778, -1.778)])
+  layer("foreground") = Line(1.5, [Point(1.778, -1.778), Point(1.524, -2.286)])
+  layer("foreground") = Line(1.5, [Point(1.524, -2.286), Point(1.905, -2.286)])
+  layer("foreground") = Line(1.5, [Point(1.905, -2.286), Point(1.778, -2.032)])
 
 public pcb-component c-2N3904 :
   port p : pin[1 through 3]

@@ -27,20 +27,12 @@ pcb-landpattern son100p300x300x80-7n :
   layer(Silkscreen("F-SilkS", Top)) = Circle(Point(-2.5, 1.5), 0.05)
   layer(Silkscreen("F-SilkS", Top)) = Circle(Point(-2.5, 1.5), 0.05)
 
-  for i in 0 to 10 do :
-    for x in [-1.0, 1.0] do :
-      layer(Cutout()) = Union([
-        Rectangle(2.0, 4.0, loc(3.0 * x, 0.0)),
-        for y in [-1.0, 1.0] seq :
-          Rectangle(3.0, 2.0, loc(2.5 * x, 3.0 * y))
-      ])
-
-  ;   layer(Cutout()) = Rectangle(2.0, 5.0, loc(i, 0.0))
-  ;   layer(SolderMask(Top)) = Circle(C, 1.0)
-  ;   layer(SolderMask(Bottom)) = Circle(C, 1.0)
-  ; layer(Courtyard(Top)) = Rectangle(10.0, 10.0)
-  for i in 0 to 2 do :
-    layer(Courtyard(Top)) = Rectangle(10.0, 10.0)
+  for x in [-1.0, 1.0] do :
+    layer(Cutout()) = Union([
+      Capsule(1.0, 5.0, loc(3.5 * x, 0.0)),
+      for y in [-1.0, 1.0] seq :
+        Capsule(3.0, 1.0, loc(0.0, 2.2 * y))
+    ])
 
   
   ref-label()

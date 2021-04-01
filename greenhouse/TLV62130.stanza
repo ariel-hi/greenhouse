@@ -14,6 +14,7 @@ defpackage TLV62130 :
   import ocdb/generator-utils
   import ocdb/generic-components
   import ocdb/passive-circuits
+  import ocdb/property-structs
   import BLM18KG700TN1D
 
 public pcb-component component :
@@ -47,6 +48,8 @@ public pcb-module module (v-out:Double) :
   pin pg
   pin ss
 
+  node pvin : pin[2]
+
   public inst buck : TLV62130/component
   public inst l    : ocdb/abracon/ASPI-0530HI/component(2.2)
   public inst ferrite-bead : BLM18KG700TN1D
@@ -54,11 +57,15 @@ public pcb-module module (v-out:Double) :
   net (gnd buck.AGND buck.PGND buck.PAD buck.DEF buck.FSW)
   net (vin buck.AVIN buck.PVIN)
 
-  val c1 = cap-strap(buck.PVIN, gnd, 10.0e-6)
-  val c2 = cap-strap(buck.PVIN, gnd, 1.0e-6)
+  val c1 = cap-strap(pvin[0], gnd, 1.0e-5)
+  val c2 = cap-strap(pvin[1], gnd, 1.0e-7)
 
-  net (ferrite-bead.p[1], c1.p[1])
-  net (ferrite-bead.p[2], c2.p[1])
+  net (pvin[1], buck.PVIN)
+
+  net (ferrite-bead.p[1], pvin[0])
+  net (ferrite-bead.p[2], pvin[1])
+
+  public net IN (pvin[0])
 
   net (ss buck.SS)
   cap-strap(buck.SS, gnd, 3.3e-9)

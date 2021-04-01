@@ -1,0 +1,186 @@
+#use-added-syntax(jitx)
+defpackage usb-c-connector :
+  import core
+  import collections
+  import math
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/bundles
+  import ocdb/land-patterns
+  import ocdb/generator-utils
+  import ocdb/generic-components
+  import ocdb/symbols
+  import ocdb/box-symbol
+
+pcb-landpattern do-214AC :
+  pad c : smd-pad(2.0, 2.0) at loc(-2.3, 0.0)
+  pad a : smd-pad(2.0, 2.0) at loc(2.3, 0.0)
+  layer(Courtyard(Top)) = Rectangle(6.6, 2.8)
+  layer(Silkscreen("pol", Top)) = Line(0.12, [Point(1.65, -1.4) Point(-3.6, -1.4)])
+  layer(Silkscreen("pol", Top)) = Line(0.12, [Point(-3.6, 1.4) Point(1.65, 1.4) ])
+  layer(Silkscreen("pol", Top)) = Line(0.30, [Point(-3.6, -1.4) Point(-3.6, 1.4)])
+  ref-label()
+
+pcb-component me-SS34 :
+  pin a
+  pin c
+  manufacturer = "MDD)icrodiode Electronics)"
+  description = "Power diode"
+  mpn = "SS34"
+  reference-prefix = "D"
+  val sym = diode-sym("schottky")
+  symbol = sym(a => sym.a, c => sym.c)  
+  landpattern = do-214AC(a => do-214AC.a, c => do-214AC.c)
+
+pcb-landpattern hro-type-c-31-m-12 :
+  pad A5 : smd-pad(0.3, 1.45) at loc(-1.25, 5.095, 0.0)
+  pad A6 : smd-pad(0.3, 1.45) at loc(-0.25, 5.095, 0.0)
+  pad A7 : smd-pad(0.3, 1.45) at loc(0.25, 5.095, 0.0)
+  pad A8 : smd-pad(0.3, 1.45) at loc(1.25, 5.095, 0.0)
+  pad B5 : smd-pad(0.3, 1.45) at loc(1.75, 5.095, 0.0)
+  pad B6 : smd-pad(0.3, 1.45) at loc(0.75, 5.095, 0.0)
+  pad B7 : smd-pad(0.3, 1.45) at loc(-0.75, 5.095, 0.0)
+  pad B8 : smd-pad(0.3, 1.45) at loc(-1.75, 5.095, 0.0)
+  pad S1 : oval-pth-pad(0.65, 1.75, 1.05, 2.1) at loc(-4.32, 4.18, 0.0)
+  pad S2 : oval-pth-pad(0.65, 1.75, 1.05, 2.1) at loc(4.32, 4.18, 0.0)
+  pad S3 : oval-pth-pad(0.65, 1.25, 1.05, 2.1) at loc(-4.32, -0.0, 0.0)
+  pad S4 : oval-pth-pad(0.65, 1.25, 1.05, 2.1) at loc(4.32, -0.0, 0.0)
+  pad A4B9 : smd-pad(0.6, 1.45) at loc(-2.45, 5.095, 0.0)
+  pad B4A9 : smd-pad(0.6, 1.45) at loc(2.45, 5.095, 0.0)
+  pad A1B12 : smd-pad(0.6, 1.45) at loc(-3.25, 5.095, 0.0)
+  pad B1A12 : smd-pad(0.6, 1.45) at loc(3.25, 5.095, 0.0)
+
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.127, [ Point(-4.47, 2.81), Point(-4.47, 1.37) ])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.127, [ Point(4.47, 2.81), Point(4.47, 1.37) ])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.127, [ Point(4.47, -1.37), Point(4.47, -2.6) ])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.127, [ Point(4.47, -2.6), Point(-4.47, -2.6) ])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.127, [ Point(-4.47, -2.6), Point(-4.47, -1.37) ])
+  layer(Silkscreen("F-SilkS", Top)) = Circle(Point(-3.4, 6.4), 0.05)
+  ref-label()
+
+pcb-symbol TYPE-C-31-M-12-symbol :
+  pin DP1 at Point(-12.7, 2.54) with :
+    direction = Left
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin CC1 at Point(-12.7, 5.08) with :
+    direction = Left
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin SBU1 at Point(-12.7, -2.54) with :
+    direction = Left
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin DN1 at Point(-12.7, 0.0) with :
+    direction = Left
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin SHIELD at Point(12.7, -7.62) with :
+    direction = Right
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin GND at Point(12.7, -10.16) with :
+    direction = Right
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin VBUS at Point(12.7, 10.16) with :
+    direction = Right
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin DP2 at Point(12.7, 0.0) with :
+    direction = Right
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin CC2 at Point(12.7, -2.54) with :
+    direction = Right
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin SBU2 at Point(12.7, 5.08) with :
+    direction = Right
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+  pin DN2 at Point(12.7, 2.54) with :
+    direction = Right
+    length = 5.08
+    number-size = 0.609
+    name-size = 0.609
+
+  layer("foreground") = Rectangle(25.4, 25.4, loc(0.0, 0.0))
+
+public pcb-component TYPE-C-31-M-12 :
+  pin CC1
+  pin CC2
+  pin DP1
+  pin DP2
+  pin DN1
+  pin DN2
+  pin SBU1
+  pin SBU2
+  pin SHIELD
+  pin vbus
+  pin gnd
+  val lp = hro-type-c-31-m-12
+  val sym = TYPE-C-31-M-12-symbol
+  landpattern = lp(CC1 => lp.A5, DP1 => lp.A6, DN1 => lp.A7, SBU1 => lp.A8, CC2 => lp.B5, DP2 => lp.B6, DN2 => lp.B7, SBU2 => lp.B8, SHIELD => lp.S1, SHIELD => lp.S2, SHIELD => lp.S3, SHIELD => lp.S4, vbus => lp.A4B9, vbus => lp.B4A9, gnd => lp.A1B12, gnd => lp.B1A12)
+  symbol = sym(CC1 => sym.CC1, DP1 => sym.DP1, DN1 => sym.DN1, SBU1 => sym.SBU1, CC2 => sym.CC2, DP2 => sym.DP2, DN2 => sym.DN2, SBU2 => sym.SBU2, SHIELD => sym.SHIELD, vbus => sym.VBUS, gnd => sym.GND)
+
+  name = "HRO_TYPE-C-31-M-12"
+  reference-prefix = "J"
+  mpn = "TYPE-C-31-M-12"
+
+
+public pcb-module usb-c-connector :
+  port usb-2 : usb-2
+  public inst con : TYPE-C-31-M-12
+
+  public net VCC (usb-2.vbus.vdd, con.vbus)
+  public net GND (usb-2.vbus.gnd, con.gnd)
+
+  net EXT-P (usb-2.data.P, con.DP1, con.DP2)
+  net EXT-N (usb-2.data.N, con.DN1, con.DN2)
+
+  res-strap(con.SHIELD, con.gnd, 100.0e3)
+  cap-strap(con.SHIELD, con.gnd, 0.1e-6)
+
+  res-strap(con.CC1, con.gnd, 5.1e3)
+  res-strap(con.CC2, con.gnd, 5.1e3)
+
+
+pcb-landpattern sot95p280x145-6n-pkg :
+  pad p[1] : smd-pad(1.21, 0.58) at loc(-1.255, 0.95, 0.0)
+  pad p[2] : smd-pad(1.21, 0.58) at loc(-1.255, 0.0, 0.0)
+  pad p[3] : smd-pad(1.21, 0.58) at loc(-1.255, -0.95, 0.0)
+  pad p[4] : smd-pad(1.21, 0.58) at loc(1.255, -0.95, 0.0)
+  pad p[5] : smd-pad(1.21, 0.58) at loc(1.255, 0.0, 0.0)
+  pad p[6] : smd-pad(1.21, 0.58) at loc(1.255, 0.95, 0.0)
+
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.127, [ Point(0.8, 1.56), Point(-0.8, 1.56) ])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.127, [ Point(-0.8, -1.56), Point(0.8, -1.56) ])
+  layer(Silkscreen("pol", Top)) = Circle(-2.2, 0.95, 0.1)
+  layer(Courtyard(Top)) = Rectangle(4.2, 3.0)
+  ref-label()
+
+pcb-component stmicro-USBLC6-2SC6 :
+  manufacturer = "STMicroelectronics"
+  mpn = "USBLC6-2SC6"
+  pin-properties :
+    [pin:Ref | pads:Int ... | side:Dir]
+    [i[0] | 1 | Left]
+    [o[0] | 6 | Right]
+    [i[1] | 3 | Left]
+    [o[1] | 4 | Right]
+    [gnd  | 2 | Down]
+    [vbus | 5 | Up]
+  make-box-symbol()
+  assign-landpattern(sot95p280x145-6n-pkg)

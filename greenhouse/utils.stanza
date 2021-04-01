@@ -1,0 +1,42 @@
+#use-added-syntax(jitx)
+defpackage greenhouse/utils :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+
+  import ocdb/defaults
+  import ocdb/land-patterns
+  import ocdb/symbols
+  import ocdb/symbol-utils
+  import ocdb/generic-components
+
+public defn connect-header (header:Instance, pinlist:Tuple<JITXObject>) :
+  inside pcb-module :
+    for (p in pins(header), q in pinlist) do :
+      make-net{_, [p, q]} $ to-symbol $ upper-case $ to-string $ base(ref(q), 1)
+
+public defn narrow-pentagon (x:Double, y:Double) -> Polygon :
+  val poly =
+    Polygon([
+      Point(-2.5, 0.0), Point(2.5, 0.0),
+      Point(2.5, -20.0), Point(0.0, -25.0), Point(-2.5, -20.0)
+    ])
+  transform(loc(x, y), poly)
+
+public defn default-gnd-net-class () -> NetClass :
+  NetClass(`Ground, [`min-trace => 0.381])
+
+public defn default-vcc-net-class () -> NetClass :
+  NetClass(`Power, [`min-trace => 0.381])
+
+public pcb-board sensor-board :
+  stackup = default-stackup(4)
+  val board-shape = Polygon([
+    Point(-7.5, 20.0), Point(7.5, 20.0),
+    Point(7.5, -30.0), Point(5.0, -35.0), Point(2.5, -30.0),
+    Point(2.5, -10.0), Point(-2.5, -10.0),
+    Point(-2.5, -30.0), Point(-5.0, -35.0), Point(-7.5, -30.0)
+  ])
+  boundary = board-shape
+  signal-boundary = board-shape
